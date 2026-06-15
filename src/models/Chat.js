@@ -12,9 +12,41 @@ const messageSchema =
         required: true,
       },
 
+      tool: {
+        type: String,
+        default: null,
+      },
+
       content: {
         type: String,
         required: true,
+      },
+    },
+    {
+      _id: false,
+    }
+  )
+
+const attachmentSchema =
+  new mongoose.Schema(
+    {
+      filename: {
+        type: String,
+        required: true,
+      },
+
+      path: {
+        type: String,
+        required: true,
+      },
+
+      mimeType: {
+        type: String,
+      },
+
+      uploadedAt: {
+        type: Date,
+        default: Date.now,
       },
     },
     {
@@ -32,6 +64,10 @@ const chatSchema =
 
       messages: [
         messageSchema,
+      ],
+
+      attachments: [
+        attachmentSchema,
       ],
     },
     {

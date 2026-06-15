@@ -1,0 +1,21 @@
+caller_name,call_block_country_code,call_block_number,call_block_direction,call_block_app,call_block_enabled,call_block_description
+,105,18204262316,inbound,,false,
+,642,13143772729,outbound,busy,false,
+Elta,321,18283131778,inbound,busy,false,
+Lora,456,18595142851,outbound,,false,
+Lora,251,19165188536,outbound,,false,"Facilis pariatur et quisquam sunt sed sunt. Sunt facilis sunt in."
+Lora,569,18435624777,outbound,busy,true,"Quia placeat excepturi sint quos quisquam sed possimus. Sint sequi eum enim nam culpa laboriosam."
+Lora,106,18652048598,inbound,busy,true,"Quia placeat excepturi sint quos quisquam sed possimus. Sint sequi eum enim nam culpa laboriosam."
+Jaeden,492,19036014873,inbound,busy,true,"Aut quod enim aliquam aliquid amet ipsum."
+Jaeden,374,13165620018,outbound,busy,true,"Aut quod enim aliquam aliquid amet ipsum."
+Jaeden,934,14844642909,inbound,busy,true,"Aut quod enim aliquam aliquid amet ipsum."
+Kay,68,15349455462,inbound,reject,true,"Eligendi ipsa animi voluptas et eligendi."
+Kay,370,13854902505,inbound,busy,true,"Eligendi ipsa animi voluptas et eligendi."
+Rose,33,15857415658,inbound,hold,true,"Qui quam qui facilis consequuntur dolor illo."
+Marge,566,17812049223,outbound,reject,false,"Qui quam qui facilis consequuntur dolor illo."
+Marge,625,12797493281,inbound,busy,true,"Excepturi voluptatem deleniti perferendis dolore. Saepe aspernatur commodi blanditiis labore cum nostrum."
+Astrid,879,16294715490,inbound,busy,true,"Corporis ut dicta sit repellendus voluptatem. Fuga voluptate voluptatibus veniam error in."
+Astrid,142,15204107480,inbound,busy,false,"Corporis ut dicta sit repellendus voluptatem. Fuga voluptate voluptatibus veniam error in."
+Gaetano,171,12706786765,outbound,busy,false,"Corporis ut dicta sit repellendus voluptatem. Fuga voluptate voluptatibus veniam error in."
+Desmond,605,13046799679,inbound,,false,"Sapiente autem voluptatem explicabo. Sint inventore modi est."
+Desmond,72,19105983341,inbound,,true,"Dolor vel sed repellat."
