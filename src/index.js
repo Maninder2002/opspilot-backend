@@ -14,6 +14,9 @@ const uploadRoutes = require("./routes/uploadRoutes")
 const chatRoutes = require("./routes/chatRoutes")
 const notFound = require("./middleware/notFound")
 const errorHandler = require("./middleware/errorHandler")
+const {
+  startUploadCleanupScheduler,
+} = require("./utils/fileCleanup")
 
 const app = express()
 
@@ -71,6 +74,8 @@ const PORT = process.env.PORT || 5000
 
 const start = async () => {
   await connectDB()
+
+  startUploadCleanupScheduler()
 
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)

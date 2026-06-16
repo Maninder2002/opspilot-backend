@@ -8,6 +8,10 @@ const {
   generateLogAnalysisPrompt,
 } = require("../tools/logAnalyzerTool")
 
+const {
+  deleteFileSafely,
+} = require("../utils/fileCleanup")
+
 const analyzeUploadedLog = async (
   req,
   res
@@ -45,6 +49,10 @@ const analyzeUploadedLog = async (
       message:
         "Log analysis failed",
     })
+  } finally {
+    if (req.file?.path) {
+      await deleteFileSafely(req.file.path)
+    }
   }
 }
 

@@ -1,7 +1,9 @@
 const Chat = require("../models/Chat")
 const { findUserChat } = require("../utils/chatHelpers")
-const runAgent = require("../agents/agentRunner")
-const readFileContent = require("../utils/readFileContent")
+const { replyToChat } = require("../services/chatAiService")
+const {
+  deleteChatAttachmentFiles,
+} = require("../utils/fileCleanup")
 
 const createChat = async (req, res) => {
   try {
@@ -90,55 +92,21 @@ const sendMessage = async (req, res) => {
 
     await chat.save()
 
-    let prompt = message.trim()
+    const history = chat.messages.map(
+      (entry) => ({
+        role: entry.role,
+        content: entry.content,
+      })
+    )
 
-    if (
-      chat.attachments &&
-      chat.attachments.length > 0
-    ) {
-      let attachmentsContext = ""
+    const aiResult = await replyToChat({
+      message: message.trim(),
+      history,
+      attachments: chat.attachments || [],
+    })
 
-      for (const file of chat.attachments) {
-        try {
-          const content = readFileContent(
-            file.path
-          )
-
-          attachmentsContext += `
-  ================================
-  FILE: ${file.filename}
-  ================================
-
-  ${content}
-
-  `
-        } catch (error) {
-          console.error(
-            "Failed to read file:",
-            file.filename,
-            error
-          )
-        }
-      }
-
-      prompt = `
-  User Question:
-
-  ${message.trim()}
-
-  Attached Files:
-
-  ${attachmentsContext}
-  `
-    }
-
-    const agentResponse = await runAgent(prompt)
-
-    const responseText =
-      agentResponse?.response ||
-      "No response generated"
-
-    const tool = agentResponse?.tool || null
+    const responseText = aiResult.response
+    const tool = aiResult.tool
 
     chat.messages.push({
       role: "assistant",
@@ -180,6 +148,10 @@ const deleteChat = async (req, res) => {
         .status(result.status)
         .json({ message: result.message })
     }
+
+    await deleteChatAttachmentFiles(
+      result.chat.attachments || []
+    )
 
     await Chat.findByIdAndDelete(req.params.id)
 

@@ -1,5 +1,8 @@
 const path = require("path")
 const { findUserChat } = require("../utils/chatHelpers")
+const {
+  deleteFileSafely,
+} = require("../utils/fileCleanup")
 
 const uploadFile = async (req, res) => {
   try {
@@ -9,6 +12,10 @@ const uploadFile = async (req, res) => {
     )
 
     if (result.error) {
+      if (req.file?.path) {
+        await deleteFileSafely(req.file.path)
+      }
+
       return res
         .status(result.status)
         .json({ message: result.message })
@@ -40,6 +47,10 @@ const uploadFile = async (req, res) => {
         ],
     })
   } catch (error) {
+    if (req.file?.path) {
+      await deleteFileSafely(req.file.path)
+    }
+
     console.error(error)
 
     res.status(500).json({
