@@ -5,4 +5,5 @@ build
 coverage
 logs
 *.log
+src/uploads/
 

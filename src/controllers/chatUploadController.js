@@ -1,20 +1,20 @@
-const Chat = require("../models/Chat")
+const path = require("path")
+const { findUserChat } = require("../utils/chatHelpers")
 
-const uploadFile = async (
-  req,
-  res
-) => {
+const uploadFile = async (req, res) => {
   try {
-    const chat =
-      await Chat.findById(
-        req.params.id
-      )
+    const result = await findUserChat(
+      req.params.id,
+      req.user.id
+    )
 
-    if (!chat) {
-      return res.status(404).json({
-        message: "Chat not found",
-      })
+    if (result.error) {
+      return res
+        .status(result.status)
+        .json({ message: result.message })
     }
+
+    const chat = result.chat
 
     if (!req.file) {
       return res.status(400).json({
@@ -23,20 +23,17 @@ const uploadFile = async (
     }
 
     chat.attachments.push({
-      filename:
-        req.file.originalname,
-
+      filename: path.basename(
+        req.file.originalname
+      ),
       path: req.file.path,
-
-      mimeType:
-        req.file.mimetype,
+      mimeType: req.file.mimetype,
     })
 
     await chat.save()
 
     res.status(200).json({
       success: true,
-
       attachment:
         chat.attachments[
           chat.attachments.length - 1
@@ -46,8 +43,7 @@ const uploadFile = async (
     console.error(error)
 
     res.status(500).json({
-      message:
-        "File upload failed",
+      message: "File upload failed",
     })
   }
 }

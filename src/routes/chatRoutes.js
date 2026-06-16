@@ -1,5 +1,7 @@
 const express = require("express")
 
+const authMiddleware = require("../middleware/authMiddleware")
+
 const {
   createChat,
   getChats,
@@ -7,34 +9,28 @@ const {
   sendMessage,
   deleteChat,
   renameChat,
-} = require(
-  "../controllers/chatController"
-)
+} = require("../controllers/chatController")
 
-const upload = require(
-  "../config/multer"
-)
+const upload = require("../config/multer")
 
-const {
-  uploadFile,
-} = require(
+const { uploadFile } = require(
   "../controllers/chatUploadController"
 )
 
 const router = express.Router()
 
+router.use(authMiddleware)
+
 router.post("/", createChat)
-
 router.get("/", getChats)
-
 router.get("/:id", getSingleChat)
-
 router.post("/:id/messages", sendMessage)
-
 router.delete("/:id", deleteChat)
-
 router.patch("/:id", renameChat)
-
-router.post("/:id/upload", upload.single("file"), uploadFile)
+router.post(
+  "/:id/upload",
+  upload.single("file"),
+  uploadFile
+)
 
 module.exports = router

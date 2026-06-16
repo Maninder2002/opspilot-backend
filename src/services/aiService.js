@@ -1,18 +1,6 @@
-require("dotenv").config()
+const client = require("../config/aiClient")
 
-
-const OpenAI = require("openai")
-const Chat = require("../models/Chat")
-
-const client = new OpenAI({
-  apiKey: process.env.GEMINI_API_KEY,
-  baseURL:
-    "https://generativelanguage.googleapis.com/v1beta/openai/",
-})
-
-const generateAIResponse = async (
-  prompt
-) => {
+const generateAIResponse = async (prompt) => {
   try {
     const response =
       await client.chat.completions.create({
@@ -70,9 +58,7 @@ const streamAIResponse = async (
       content: aiResponse,
     })
 
-    if (
-      chat.title === "New Chat"
-    ) {
+    if (chat.title === "New Chat") {
       chat.title =
         prompt.slice(0, 40) + "..."
     }
@@ -86,6 +72,7 @@ const streamAIResponse = async (
     res.status(500).end()
   }
 }
+
 module.exports = {
   generateAIResponse,
   streamAIResponse,

@@ -1,16 +1,15 @@
 const express = require("express")
 
-const upload = require(
-  "../config/multer"
-)
+const authMiddleware = require("../middleware/authMiddleware")
+const upload = require("../config/multer")
 
-const {
-  analyzeUploadedLog,
-} = require(
+const { analyzeUploadedLog } = require(
   "../controllers/uploadController"
 )
 
 const router = express.Router()
+
+router.use(authMiddleware)
 
 router.post(
   "/analyze",
