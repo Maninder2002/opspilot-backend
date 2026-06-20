@@ -14,4 +14,4 @@ RUN mkdir -p src/uploads
 
 EXPOSE 5000
 
-CMD ["pnpm", "start"]`
+CMD ["pnpm", "start"]
