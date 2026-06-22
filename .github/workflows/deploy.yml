@@ -1,0 +1,26 @@
+name: Deploy Backend
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Update Backend Source
+        run: |
+          cd /opt/opspilot/backend-src
+
+          git fetch origin
+          git reset --hard origin/develop
+
+      - name: Rebuild Backend Container
+        run: |
+          cd /opt/opspilot
+
+          docker compose build backend
+
+          docker compose up -d backend
